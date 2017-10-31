@@ -1,0 +1,12 @@
+{
+  "name": "node-esb-tunnel",
+  "version": "0.0.4",
+  "author": "Antonio Estrada",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.15.4",
+    "https-proxy-agent": "^2.1.0",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {}
+}

@@ -56,8 +56,34 @@ var test = APP_URL[currentEnv].REST_BASE;
 
 Be sure to watch the CloudFoundry logs, the application will send all communication attempts as well as any issues it finds.
 
+#### Docker
+
+This application uses node:alpine as a base image. To build the image run the following command while on the folder:
+
+```
+$ docker build -t <TAG_NAME> .
+```
+
+Once the image is built, the environment variables must be sent when the application runs. This can be done via either an environment file or setting them directly in the `run` command.
+
+To run the container with environment variables do the following:
+
+```
+$ docker run -e "PORT=8080" -e "BASE_URL=https://api-test.allianz.com/node-esb-tunnel/endpoint/" -e "APP_URL={'from-docker': true}" -p 8080:8080 -d <TAG_NAME>
+```
+
+Where -e is an individual environment variable, -p is the port combination that will be used locally and the exposed one from the container (local:exposed), -d means it will run in a detached mode, and finally the tag name for the build.
+
+If on windows run `docker-machine ip default` to retrieve the IP that will be used, otherwise use `localhost`.
+
+To test the container run:
+
+```
+$ curl 192.168.99.100:8080/endpoint/what
+```
+
 ---
 
 Author: Antonio Estrada (antonio.estrada.ext@eulerhermes.com)
 
-Last Updated: 27/10/2017
+Last Updated: 14/11/2017

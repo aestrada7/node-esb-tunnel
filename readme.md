@@ -43,7 +43,7 @@ _Make sure the `Content-Type` header is set to `plain/text`, otherwise Node will
 
 #### Using APP_URL
 
-The use of `APP_URL` allows an application to include `https://api-test.allianz.com/node-esb-tunnel/environment.js` and have access to the value defined on the CloudFoundry environment variables. Once injected, accessing the values is easy since the object is saved on the global JavaScript variable `APP_URL`. A sample of its use:
+The use of `APP_URL` allows an application to include `https://api-test.allianz.com/node-esb-tunnel/environment.js` and have access to the value defined on the environment variables. Once injected, accessing the values is easy since the object is saved on the global JavaScript variable `APP_URL`. A sample of its use:
 
 ```
 var currentEnv = 'myeh';
@@ -69,7 +69,7 @@ Once the image is built, the environment variables must be sent when the applica
 To run the container with environment variables do the following:
 
 ```
-$ docker run -e "PORT=8080" -e "BASE_URL=https://api-test.allianz.com/node-esb-tunnel/endpoint/" -e "APP_URL={'from-docker': true}" -p 8080:8080 -d <TAG_NAME>
+$ docker run -e "PORT=8080" -e "BASE_URL=https://api-test.allianz.com/node-esb-tunnel/endpoint/" -e "APP_URL={'from-docker': true, 'myeh': {'REST_BASE': 'https://api-test.allianz.com/node-esb-tunnel/endpoint'}}" -p 8080:8080 -d <TAG_NAME>
 ```
 
 Where -e is an individual environment variable, -p is the port combination that will be used locally and the exposed one from the container (local:exposed), -d means it will run in a detached mode, and finally the tag name for the build.
@@ -86,4 +86,4 @@ $ curl 192.168.99.100:8080/endpoint/what
 
 Author: Antonio Estrada (antonio.estrada.ext@eulerhermes.com)
 
-Last Updated: 14/11/2017
+Last Updated: 16/11/2017

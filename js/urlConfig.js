@@ -2,11 +2,18 @@ var URLS = URLS || {};
 
 //Defaults
 //AE: removed / at the beginning of each route so it can work on ADP
-var LOCAL_REST_BASE = 'oneweb/ajax/aspro/esb-rest-service';
-var LOCAL_REST_BAS_BASE = 'oneweb/ajax/aspro/broker';
-var LOCAL_STATIC_DATA = 'app/staticData/';
-var LOCAL_PROFILE = 'oneweb/idm/v1/profile';
-var LOCAL_REST_BASE_MENU = 'oneweb/ajax/aspro/broker/menus';
+var DEFAULT_REST_BASE = 'oneweb/ajax/aspro/esb-rest-service';
+var DEFAULT_REST_BAS_BASE = 'oneweb/ajax/aspro/broker';
+var DEFAULT_STATIC_DATA = 'app/staticData/';
+var DEFAULT_PROFILE = 'oneweb/idm/v1/profile';
+var DEFAULT_REST_BASE_MENU = 'oneweb/ajax/aspro/broker/menus';
+
+URLS.REST_BASE = DEFAULT_REST_BASE;
+URLS.REST_BAS_BASE = DEFAULT_REST_BAS_BASE;
+URLS.STATIC_DATA_BASE = DEFAULT_STATIC_DATA;
+URLS.PROFILE = DEFAULT_PROFILE;
+URLS.REST_BASE_MENU = DEFAULT_REST_BASE_MENU;
+URLS.usePreloadedStaticData = false;
 
 var currentEnv = getUrlParameter('env');
 
@@ -14,12 +21,29 @@ if(!currentEnv) {
   currentEnv = 'default';
 }
 
-URLS.REST_BASE = APP_URL[currentEnv].REST_BASE || LOCAL_REST_BASE;
-URLS.REST_BAS_BASE = APP_URL[currentEnv].REST_BAS_BASE || LOCAL_REST_BAS_BASE;
-URLS.STATIC_DATA_BASE = APP_URL[currentEnv].STATIC_DATA_BASE || LOCAL_STATIC_DATA;
-URLS.PROFILE = APP_URL[currentEnv].PROFILE_ENDPOINT || LOCAL_PROFILE;
-URLS.REST_BASE_MENU = APP_URL[currentEnv].REST_BASE_MENU || LOCAL_REST_BASE_MENU;
-URLS.usePreloadedStaticData = APP_URL[currentEnv].usePreloadedStaticData === "1";
+if(APP_URL[currentEnv]) {
+  if(APP_URL[currentEnv].REST_BASE) {
+    URLS.REST_BASE = APP_URL[currentEnv].REST_BASE;
+  }
+
+  if(APP_URL[currentEnv].REST_BAS_BASE) {
+    URLS.REST_BAS_BASE = APP_URL[currentEnv].REST_BAS_BASE;
+  }
+
+  if(APP_URL[currentEnv].STATIC_DATA_BASE) {
+    URLS.STATIC_DATA_BASE = APP_URL[currentEnv].STATIC_DATA_BASE;
+  }
+
+  if(APP_URL[currentEnv].PROFILE_ENDPOINT) {
+    URLS.PROFILE = APP_URL[currentEnv].PROFILE_ENDPOINT;
+  }
+
+  if(APP_URL[currentEnv].REST_BASE_MENU) {
+    URLS.REST_BASE_MENU = APP_URL[currentEnv].REST_BASE_MENU;
+  }
+
+  URLS.usePreloadedStaticData = APP_URL[currentEnv].usePreloadedStaticData === "1";
+}
 
 function getUrlParameter(name) {
   name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');

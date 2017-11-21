@@ -15,6 +15,13 @@ if(proxy) {
   proxyAgent = new HttpsProxyAgent(proxy);
 }
 
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+};
+
 var rawBody = function(req, res, next) {
   req.setEncoding('utf-8');
   req.rawBody = '';
@@ -26,6 +33,7 @@ var rawBody = function(req, res, next) {
   });
 };
 
+app.use(allowCrossDomain);
 app.use(rawBody);
 
 app.get('/endpoint/*', function(req, res) {
